@@ -1,0 +1,27 @@
+spring.application.name: spring-data-service
+
+server.port: 8081
+
+management.server.port: 8082
+
+spring.data.cassandra:
+  keyspace-name: inventory
+  username: zCxIYzPRpTXZJjnSuYIuWCuZ
+  password: GzmP5Ch6cxN094HCCdR7mv,AzAgB9Tx2tY+Wac78XBEu-.GJPbpNedNXg_q3ZtyNQ6A8prSlZLA4L_BR_-gOfuJcSp-Q8.K+IW6Kdvhn3UqMaMuJKbBcgP-E92ihYHe7
+  # Create the schema on the fly if it doesn't exist
+  schema-action: CREATE_IF_NOT_EXISTS
+  # Increase timeouts when connecting to Astra from a dev workstation
+  request:
+    timeout: 10s
+  connection:
+    connect-timeout: 10s
+    init-query-timeout: 10s
+
+datastax.astra:
+  secure-connect-bundle: C:\Users\jatsingh1\Downloads\secure-connect-inventorydb (1).zip
+
+astra.db:
+  id: dc54d0ef-aa19-4300-9412-6d403aa2e8c4-1
+  region: ap-southeast-1
+  keyspace: inventory
+  applcation.token: AstraCS:zCxIYzPRpTXZJjnSuYIuWCuZ:d376c25964c99c418aa94173947f1110451b844813a1ce3413c30eeeb4e211d1
