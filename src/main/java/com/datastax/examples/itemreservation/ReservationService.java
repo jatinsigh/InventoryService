@@ -14,10 +14,10 @@ public class ReservationService {
 
     @Autowired
     IItemReservation iItemReservation;
-    public String getItemReserved(ItemsReservationDTO itemsReservationDTO){
+    public String getItemReserved(ItemsReservationDTO itemsReservationDTO) throws Exception{
         Optional<WarehouseItems> warehouseItems=iWarehouseItems.getWareHouseByProductId(itemsReservationDTO.getProductId());
         if(!warehouseItems.isPresent()){
-            return "Product Not Found!";
+            throw new Exception("Warehouse not found");
         }
         ItemsReservation itemsReservation=ItemsReservation.builder().sourceLocation(warehouseItems.get().getWarehouseLocation())
                 .destinationLocation(itemsReservationDTO.getLocation()).sourceId(warehouseItems.get().getWarehouseId())
