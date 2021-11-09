@@ -19,10 +19,16 @@ public class ReservationService {
         if(!warehouseItems.isPresent()){
             throw new Exception("Warehouse not found");
         }
+
         ItemsReservation itemsReservation=ItemsReservation.builder().sourceLocation(warehouseItems.get().getWarehouseLocation())
                 .destinationLocation(itemsReservationDTO.getLocation()).sourceId(warehouseItems.get().getWarehouseId())
                 .productId(itemsReservationDTO.getProductId()).build();
-
+        iWarehouseItems.delete(warehouseItems.get());
+        int quantity=warehouseItems.get().getQuantityAvailable()-1;
+        if(quantity>0){
+            warehouseItems.get().setQuantityAvailable(quantity);
+            iWarehouseItems.save(warehouseItems.get());
+        }
         iItemReservation.save(itemsReservation);
         return "Product Reserved!";
     }

@@ -34,10 +34,23 @@ public class InventoryController {
     @Autowired
     WarehouseItemService warehouseItemService;
 
+    @GetMapping("/warehouses")
+    public ResponseEntity<List<Warehouse>> getWarehouse() throws Exception{
+        return new ResponseEntity<>(warehouseRepo.findAll(), HttpStatus.OK);
+    }
+    @GetMapping("/warehouseitems")
+    public ResponseEntity<List<WarehouseItems>> getWarehouseitems() throws Exception{
+        return new ResponseEntity<>(warehouseItemsRepo.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping("/warehouse")
+    public ResponseEntity<List<Warehouse>> getWarehouseByLocation() throws Exception{
+        return new ResponseEntity<>(warehouseRepo.findAll(), HttpStatus.OK);
+    }
 //    getWarehouseByLocation
     @GetMapping("/warehouse/{location}")
     public ResponseEntity<List<Warehouse>> getWarehouseByLocation(@PathVariable String location) throws Exception{
-        return new ResponseEntity<>(warehouseRepo.findWarehouseByWarehouseLocation(location), HttpStatus.OK);
+        return new ResponseEntity<>(warehouseRepo.findWarehouseByWarehouse_location(location), HttpStatus.OK);
     }
 
 //  createWarehouse

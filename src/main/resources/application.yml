@@ -9,7 +9,7 @@ spring.data.cassandra:
   username: zCxIYzPRpTXZJjnSuYIuWCuZ
   password: GzmP5Ch6cxN094HCCdR7mv,AzAgB9Tx2tY+Wac78XBEu-.GJPbpNedNXg_q3ZtyNQ6A8prSlZLA4L_BR_-gOfuJcSp-Q8.K+IW6Kdvhn3UqMaMuJKbBcgP-E92ihYHe7
   # Create the schema on the fly if it doesn't exist
-  schema-action: CREATE_IF_NOT_EXISTS
+  schema-action: NONE
   # Increase timeouts when connecting to Astra from a dev workstation
   request:
     timeout: 10s

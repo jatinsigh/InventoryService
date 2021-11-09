@@ -4,10 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.cassandra.core.mapping.CassandraType;
-import org.springframework.data.cassandra.core.mapping.Column;
-import org.springframework.data.cassandra.core.mapping.PrimaryKey;
-import org.springframework.data.cassandra.core.mapping.Table;
+import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
+import org.springframework.data.cassandra.core.mapping.*;
+
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
@@ -15,8 +15,7 @@ import org.springframework.data.cassandra.core.mapping.Table;
 @Builder
 @Table(value="itemsreservation")
 public class ItemsReservation {
-    @PrimaryKey
-    @Column("product_id")
+    @PrimaryKeyColumn(name = "product_id", ordinal = 0,type= PrimaryKeyType.PARTITIONED)
     @CassandraType(type = CassandraType.Name.TEXT)
     private String productId;
 
@@ -28,7 +27,7 @@ public class ItemsReservation {
     @CassandraType(type = CassandraType.Name.TEXT)
     private String sourceLocation;
 
-    @Column("source_id")
+    @PrimaryKeyColumn(name = "source_id",ordinal = 1, type = PrimaryKeyType.CLUSTERED)
     @CassandraType(type = CassandraType.Name.UUID)
-    private int sourceId;
+    private UUID sourceId;
 }

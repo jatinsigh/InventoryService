@@ -4,10 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.cassandra.core.mapping.CassandraType;
-import org.springframework.data.cassandra.core.mapping.Column;
-import org.springframework.data.cassandra.core.mapping.PrimaryKey;
-import org.springframework.data.cassandra.core.mapping.Table;
+import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
+import org.springframework.data.cassandra.core.mapping.*;
+
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
@@ -15,18 +15,17 @@ import org.springframework.data.cassandra.core.mapping.Table;
 @Builder
 @Table(value="warehouseitems")
 public class WarehouseItems {
-    @PrimaryKey
-    @Column("product_id")
+    @PrimaryKeyColumn(name="product_id",ordinal = 0,type= PrimaryKeyType.PARTITIONED)
     @CassandraType(type = CassandraType.Name.TEXT)
     private String productId;
 
-    @Column("quantity_available")
+    @PrimaryKeyColumn(name="quantity_available",ordinal=1,type=PrimaryKeyType.CLUSTERED)
     @CassandraType(type = CassandraType.Name.INT)
     private int quantityAvailable;
 
-    @Column("warehouse_id")
+    @PrimaryKeyColumn(name="warehouse_id",ordinal = 2,type=PrimaryKeyType.CLUSTERED)
     @CassandraType(type = CassandraType.Name.UUID)
-    private int warehouseId;
+    private UUID warehouseId;
 
     @Column("warehouse_location")
     @CassandraType(type = CassandraType.Name.TEXT)

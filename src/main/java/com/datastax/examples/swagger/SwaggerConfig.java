@@ -19,10 +19,9 @@ public class SwaggerConfig {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("orders")
                 .select()
                 .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.ant("/orders/**"))
+                .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo());
     }
