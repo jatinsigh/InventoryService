@@ -57,13 +57,13 @@ public class InventoryController {
 //  createWarehouse
     @PostMapping("/warehouse")
     public ResponseEntity<Warehouse> createWarehouse(@RequestBody Warehouse warehouse) throws Exception{
-        System.out.println(warehouse.toString());
+//        System.out.println(warehouse.toString());
         return new ResponseEntity<>(warehouseRepo.save(warehouse), HttpStatus.OK);
     }
 
     @PostMapping("/warehouseitems")
     public ResponseEntity<WarehouseItems> createWarehouseItems(@RequestBody WarehouseItems warehouseItems) throws Exception{
-        System.out.println(warehouseItems.toString());
+//        System.out.println(warehouseItems.toString());
         return new ResponseEntity<>(warehouseItemsRepo.save(warehouseItems), HttpStatus.OK);
     }
 
@@ -81,7 +81,12 @@ public class InventoryController {
 
 //    getItemsReserve
     @PostMapping("/itemsreserve")
-    public ResponseEntity<String> getItemReserved(@RequestBody ItemsReservationDTO itemsReservationDTO) throws Exception {
-        return new ResponseEntity<>(reservationService.getItemReserved(itemsReservationDTO), HttpStatus.OK);
+    public ResponseEntity<Object> getItemReserved(@RequestBody ItemsReservationDTO itemsReservationDTO) throws Exception {
+        try {
+            return new ResponseEntity<>(reservationService.getItemReserved(itemsReservationDTO), HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }
