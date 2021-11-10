@@ -2,19 +2,20 @@ package com.datastax.examples.itemreservation;
 
 import com.datastax.examples.warehouse.IWarehouse;
 import com.datastax.examples.warehouse.Warehouse;
-import com.datastax.examples.warehouse.WarehouseItemService;
+import com.datastax.examples.warehouseitems.WarehouseItemService;
 import com.datastax.examples.warehouseitems.IWarehouseItems;
 import com.datastax.examples.warehouseitems.WarehouseItems;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin
 @RestController
+@Slf4j
 @RequestMapping("/api")
 public class InventoryController {
     @GetMapping("/")
@@ -68,12 +69,18 @@ public class InventoryController {
 
 //    getOnhandSupplyOfItemByProductId
     @GetMapping("/warehouse/items/{productId}")
-    public ResponseEntity<List<WarehouseItems>> getOnHandSupplyOfItemByProductId(@PathVariable String productId) throws Exception{
-        return new ResponseEntity<>(warehouseItemService.getOnhandSupplyOfItems(productId), HttpStatus.OK);
+    public ResponseEntity<Object> getOnHandSupplyOfItemByProductId(@PathVariable String productId) throws Exception{
+        try {
+            return new ResponseEntity<>(warehouseItemService.getOnhandSupplyOfItems(productId), HttpStatus.OK);
+        }
+        catch (Exception e){
+            log.warn("Exception : {}", e);
+            return new ResponseEntity<>("Product Not Found!!", HttpStatus.BAD_REQUEST);
+        }
     }
 
 //    getItemsReserve
-    @PostMapping("itemsreserve")
+    @PostMapping("/itemsreserve")
     public ResponseEntity<String> getItemReserved(@RequestBody ItemsReservationDTO itemsReservationDTO) throws Exception {
         return new ResponseEntity<>(reservationService.getItemReserved(itemsReservationDTO), HttpStatus.OK);
     }

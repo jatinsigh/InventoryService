@@ -1,4 +1,4 @@
-package com.datastax.examples.warehouse;
+package com.datastax.examples.warehouseitems;
 
 import com.datastax.examples.warehouseitems.IWarehouseItems;
 import com.datastax.examples.warehouseitems.WarehouseItems;
@@ -14,14 +14,11 @@ public class WarehouseItemService {
     @Autowired
     IWarehouseItems iWarehouseItems;
 
-    public List<WarehouseItems> getOnhandSupplyOfItems(String productId)throws Exception{
+    public List<WarehouseItems> getOnhandSupplyOfItems(String productId){
         List<String> prodId = new ArrayList<>();
         prodId.add(productId);
-        try {
-            List<WarehouseItems> warehouseItems = iWarehouseItems.findAllById(prodId);
-            return warehouseItems;
-        }catch (Exception e){
-            throw new Exception("Product Not Found!");
-        }
+        List<WarehouseItems> warehouseItems = iWarehouseItems.findAllById(prodId);
+        return warehouseItems;
+
     }
 }

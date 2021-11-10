@@ -1,6 +1,7 @@
 spring.application.name: spring-data-service
 
-server.port: 8081
+server:
+  port: 8081
 
 management.server.port: 8082
 
@@ -18,7 +19,7 @@ spring.data.cassandra:
     init-query-timeout: 10s
 
 datastax.astra:
-  secure-connect-bundle: C:\Users\jatsingh1\Downloads\secure-connect-inventorydb (1).zip
+  secure-connect-bundle: ${ZIP_FILE:src/main/resources/secure-connect-inventory.zip}
 
 astra.db:
   id: dc54d0ef-aa19-4300-9412-6d403aa2e8c4-1
