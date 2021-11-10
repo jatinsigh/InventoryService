@@ -15,10 +15,33 @@ public class ReservationService {
     @Autowired
     IItemReservation iItemReservation;
     public String getItemReserved(ItemsReservationDTO itemsReservationDTO) throws Exception{
+
+
+        String productId = itemsReservationDTO.getProductId();
+        String location = itemsReservationDTO.getLocation();
+        Optional<WarehouseItems> warehouseItemsByLocation = iWarehouseItems.getWareHouseByProductIdAAndWarehouseLocation(productId, location);
+        if(warehouseItemsByLocation.isPresent()){
+
+            ItemsReservation itemsReservation=ItemsReservation.builder().sourceLocation(warehouseItemsByLocation.get().getWarehouseLocation())
+                    .destinationLocation(itemsReservationDTO.getLocation()).sourceId(warehouseItemsByLocation.get().getWarehouseId())
+                    .productId(itemsReservationDTO.getProductId()).build();
+
+            int qty = warehouseItemsByLocation.get().getQuantityAvailable() - 1;
+            iWarehouseItems.delete(warehouseItemsByLocation.get());
+            if(qty > 0){
+                warehouseItemsByLocation.get().setQuantityAvailable(qty);
+                iWarehouseItems.save(warehouseItemsByLocation.get());
+            }
+            iItemReservation.save(itemsReservation);
+            return "Product Reserved in Warehouse Location: " + warehouseItemsByLocation.get().getWarehouseLocation();
+        }
+
+
         Optional<WarehouseItems> warehouseItems=iWarehouseItems.getWareHouseByProductId(itemsReservationDTO.getProductId());
         if(!warehouseItems.isPresent()){
             throw new Exception("Warehouse not found");
         }
+
 
         ItemsReservation itemsReservation=ItemsReservation.builder().sourceLocation(warehouseItems.get().getWarehouseLocation())
                 .destinationLocation(itemsReservationDTO.getLocation()).sourceId(warehouseItems.get().getWarehouseId())
