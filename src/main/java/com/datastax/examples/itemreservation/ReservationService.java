@@ -19,7 +19,7 @@ public class ReservationService {
 
         String productId = itemsReservationDTO.getProductId();
         String location = itemsReservationDTO.getLocation();
-        Optional<WarehouseItems> warehouseItemsByLocation = iWarehouseItems.getWareHouseByProductIdAAndWarehouseLocation(productId, location);
+        Optional<WarehouseItems> warehouseItemsByLocation = iWarehouseItems.getWareHouseByProductIdAndWarehouseLocation(productId, location);
         if(warehouseItemsByLocation.isPresent()){
 
             ItemsReservation itemsReservation=ItemsReservation.builder().sourceLocation(warehouseItemsByLocation.get().getWarehouseLocation())

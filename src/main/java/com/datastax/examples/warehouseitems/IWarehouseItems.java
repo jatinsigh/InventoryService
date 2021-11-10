@@ -14,7 +14,6 @@ public interface IWarehouseItems extends CassandraRepository<WarehouseItems,Stri
     public Optional<WarehouseItems> getWareHouseByProductId(String product_id);
 
     @AllowFiltering
-    @Query("select * from warehouseitems where product_id=?0 and warehouse_location=?1 allow filtering;")
-    public Optional<WarehouseItems> getWareHouseByProductIdAAndWarehouseLocation(String product_id, String warehouse_location);
+    public Optional<WarehouseItems> getWareHouseByProductIdAndWarehouseLocation(String product_id, String warehouse_location);
 
 }
