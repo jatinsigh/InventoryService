@@ -7,10 +7,10 @@ management.server.port: 8082
 
 spring.data.cassandra:
   keyspace-name: inventory
-  username: zCxIYzPRpTXZJjnSuYIuWCuZ
-  password: GzmP5Ch6cxN094HCCdR7mv,AzAgB9Tx2tY+Wac78XBEu-.GJPbpNedNXg_q3ZtyNQ6A8prSlZLA4L_BR_-gOfuJcSp-Q8.K+IW6Kdvhn3UqMaMuJKbBcgP-E92ihYHe7
+  username: SpuOGbyjNlZDIeaAaUmuIlGM
+  password: Wcutzda0zLZZe+_WltSD8sUI-8tKP6ctArOZ-Rmo1GHfLcrYuZm,wS+N5o.R_,f6Q+FA9oFCNkBG6Irp,Dyko6pm0TtXl-KnpadvtkujNd6XW5mEaqFRDF5qoMD9tPmp
   # Create the schema on the fly if it doesn't exist
-  schema-action: NONE
+  schema-action: create_if_not_exists
   # Increase timeouts when connecting to Astra from a dev workstation
   request:
     timeout: 10s
@@ -22,7 +22,7 @@ datastax.astra:
   secure-connect-bundle: ${ZIP_FILE:src/main/resources/secure-connect-inventory.zip}
 
 astra.db:
-  id: dc54d0ef-aa19-4300-9412-6d403aa2e8c4-1
-  region: ap-southeast-1
+  id: 8bc9dd9a-4b98-46ff-8916-893efcab9570-1
+  region: us-east-1
   keyspace: inventory
-  applcation.token: AstraCS:zCxIYzPRpTXZJjnSuYIuWCuZ:d376c25964c99c418aa94173947f1110451b844813a1ce3413c30eeeb4e211d1
+  applcation.token: AstraCS:SpuOGbyjNlZDIeaAaUmuIlGM:2320444e78c7bf9914199115c2a9c660a5c17e5fd39cc661a547042b9a678d15

@@ -27,7 +27,9 @@ public class WarehouseItems {
     @CassandraType(type = CassandraType.Name.UUID)
     private UUID warehouseId;
 
-    @Column("warehouse_location")
+
+    @PrimaryKeyColumn(name="warehouse_location",ordinal = 3,type=PrimaryKeyType.CLUSTERED)
+//    @Column("warehouse_location")
     @CassandraType(type = CassandraType.Name.TEXT)
     private String warehouseLocation;
 }
