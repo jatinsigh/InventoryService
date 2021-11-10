@@ -10,7 +10,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableConfigurationProperties(DataStaxAstraProperties.class)
-//@EnableSwagger2
+@EnableSwagger2
 public class SpringDataCassandraApplication {
 
     public static void main(String[] args) {
