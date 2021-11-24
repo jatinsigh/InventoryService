@@ -1,10 +1,10 @@
 package com.datastax.examples.itemreservation;
 
-import com.datastax.examples.warehouse.IWarehouse;
-import com.datastax.examples.warehouse.Warehouse;
-import com.datastax.examples.warehouseitems.WarehouseItemService;
-import com.datastax.examples.warehouseitems.IWarehouseItems;
-import com.datastax.examples.warehouseitems.WarehouseItems;
+import com.datastax.examples.shipnodes.IShipNodes;
+import com.datastax.examples.shipnodes.ShipNodes;
+import com.datastax.examples.shipnodesitems.ShipNodesItemService;
+import com.datastax.examples.shipnodesitems.IShipNodesItems;
+import com.datastax.examples.shipnodesitems.ShipNodesItems;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,54 +24,54 @@ public class InventoryController {
     }
 
     @Autowired
-    IWarehouse warehouseRepo;
+    IShipNodes shipnodesRepo;
 
     @Autowired
-    IWarehouseItems warehouseItemsRepo;
+    IShipNodesItems shipnodesItemsRepo;
 
     @Autowired
     ReservationService reservationService;
 
     @Autowired
-    WarehouseItemService warehouseItemService;
+    ShipNodesItemService shipNodesItemService;
 
-    @GetMapping("/warehouses")
-    public ResponseEntity<List<Warehouse>> getWarehouse() throws Exception{
-        return new ResponseEntity<>(warehouseRepo.findAll(), HttpStatus.OK);
-    }
-    @GetMapping("/warehouseitems")
-    public ResponseEntity<List<WarehouseItems>> getWarehouseitems() throws Exception{
-        return new ResponseEntity<>(warehouseItemsRepo.findAll(), HttpStatus.OK);
-    }
-
-    @GetMapping("/warehouse")
-    public ResponseEntity<List<Warehouse>> getWarehouseByLocation() throws Exception{
-        return new ResponseEntity<>(warehouseRepo.findAll(), HttpStatus.OK);
-    }
-//    getWarehouseByLocation
-    @GetMapping("/warehouse/{location}")
-    public ResponseEntity<List<Warehouse>> getWarehouseByLocation(@PathVariable String location) throws Exception{
-        return new ResponseEntity<>(warehouseRepo.findWarehouseByWarehouse_location(location), HttpStatus.OK);
+//    @GetMapping("/shipnodes")
+//    public ResponseEntity<List<ShipNodes>> getshipnodes() throws Exception{
+//        return new ResponseEntity<>(shipnodesRepo.findAll(), HttpStatus.OK);
+//    }
+    @GetMapping("/shipnodesitems")
+    public ResponseEntity<List<ShipNodesItems>> getshipnodesitems() throws Exception{
+        return new ResponseEntity<>(shipnodesItemsRepo.findAll(), HttpStatus.OK);
     }
 
-//  createWarehouse
-    @PostMapping("/warehouse")
-    public ResponseEntity<Warehouse> createWarehouse(@RequestBody Warehouse warehouse) throws Exception{
-//        System.out.println(warehouse.toString());
-        return new ResponseEntity<>(warehouseRepo.save(warehouse), HttpStatus.OK);
+    @GetMapping("/shipnodes")
+    public ResponseEntity<List<ShipNodes>> getshipnodesByLocation() throws Exception{
+        return new ResponseEntity<>(shipnodesRepo.findAll(), HttpStatus.OK);
+    }
+//    getshipnodesByLocation
+    @GetMapping("/shipnodes/{location}")
+    public ResponseEntity<List<ShipNodes>> getshipnodesByLocation(@PathVariable String location) throws Exception{
+        return new ResponseEntity<>(shipnodesRepo.findshipnodesByshipnodes_location(location), HttpStatus.OK);
     }
 
-    @PostMapping("/warehouseitems")
-    public ResponseEntity<WarehouseItems> createWarehouseItems(@RequestBody WarehouseItems warehouseItems) throws Exception{
-//        System.out.println(warehouseItems.toString());
-        return new ResponseEntity<>(warehouseItemsRepo.save(warehouseItems), HttpStatus.OK);
+//  createshipnodes
+    @PostMapping("/shipnodes")
+    public ResponseEntity<ShipNodes> createshipnodes(@RequestBody ShipNodes shipNodes) throws Exception{
+//        System.out.println(shipnodes.toString());
+        return new ResponseEntity<>(shipnodesRepo.save(shipNodes), HttpStatus.OK);
+    }
+
+    @PostMapping("/shipnodesitems")
+    public ResponseEntity<ShipNodesItems> createshipnodesItems(@RequestBody ShipNodesItems shipNodesItems) throws Exception{
+//        System.out.println(shipnodesItems.toString());
+        return new ResponseEntity<>(shipnodesItemsRepo.save(shipNodesItems), HttpStatus.OK);
     }
 
 //    getOnhandSupplyOfItemByProductId
-    @GetMapping("/warehouse/items/{productId}")
+    @GetMapping("/shipnodes/items/{productId}")
     public ResponseEntity<Object> getOnHandSupplyOfItemByProductId(@PathVariable String productId) throws Exception{
         try {
-            return new ResponseEntity<>(warehouseItemService.getOnhandSupplyOfItems(productId), HttpStatus.OK);
+            return new ResponseEntity<>(shipNodesItemService.getOnhandSupplyOfItems(productId), HttpStatus.OK);
         }
         catch (Exception e){
             log.warn("Exception : {}", e);

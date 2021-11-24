@@ -1,4 +1,4 @@
-package com.datastax.examples.warehouseitems;
+package com.datastax.examples.shipnodesitems;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,8 +13,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(value="warehouseitems")
-public class WarehouseItems {
+@Table(value="shipnodesitems")
+public class ShipNodesItems {
     @PrimaryKeyColumn(name="product_id",ordinal = 0,type= PrimaryKeyType.PARTITIONED)
     @CassandraType(type = CassandraType.Name.TEXT)
     private String productId;
@@ -23,13 +23,11 @@ public class WarehouseItems {
     @CassandraType(type = CassandraType.Name.INT)
     private int quantityAvailable;
 
-    @PrimaryKeyColumn(name="warehouse_id",ordinal = 2,type=PrimaryKeyType.CLUSTERED)
+    @PrimaryKeyColumn(name="shipnodes_id",ordinal = 2,type=PrimaryKeyType.CLUSTERED)
     @CassandraType(type = CassandraType.Name.UUID)
-    private UUID warehouseId;
+    private UUID shipNodesId;
 
-
-    @PrimaryKeyColumn(name="warehouse_location",ordinal = 3,type=PrimaryKeyType.CLUSTERED)
-//    @Column("warehouse_location")
+    @PrimaryKeyColumn(name="shipnodes_location",ordinal = 3,type=PrimaryKeyType.CLUSTERED)
     @CassandraType(type = CassandraType.Name.TEXT)
-    private String warehouseLocation;
+    private String shipNodesLocation;
 }

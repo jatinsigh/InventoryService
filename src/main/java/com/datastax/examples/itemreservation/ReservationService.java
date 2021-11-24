@@ -1,7 +1,7 @@
 package com.datastax.examples.itemreservation;
 
-import com.datastax.examples.warehouseitems.IWarehouseItems;
-import com.datastax.examples.warehouseitems.WarehouseItems;
+import com.datastax.examples.shipnodesitems.IShipNodesItems;
+import com.datastax.examples.shipnodesitems.ShipNodesItems;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +10,7 @@ import java.util.Optional;
 @Service
 public class ReservationService {
     @Autowired
-    IWarehouseItems iWarehouseItems;
+    IShipNodesItems iShipNodesItems;
 
     @Autowired
     IItemReservation iItemReservation;
@@ -19,43 +19,43 @@ public class ReservationService {
 
         String productId = itemsReservationDTO.getProductId();
         String location = itemsReservationDTO.getLocation();
-        Optional<WarehouseItems> warehouseItemsByLocation = iWarehouseItems.getWareHouseByProductIdAndWarehouseLocation(productId, location);
-        if(warehouseItemsByLocation.isPresent()){
+        Optional<ShipNodesItems> shipNodesItems = iShipNodesItems.getShipNodesByProductIdAndShipNodes_Location(productId, location);
+        if(shipNodesItems.isPresent()){
 
-            ItemsReservation itemsReservation=ItemsReservation.builder().sourceLocation(warehouseItemsByLocation.get().getWarehouseLocation())
-                    .destinationLocation(itemsReservationDTO.getLocation()).sourceId(warehouseItemsByLocation.get().getWarehouseId())
+            ItemsReservation itemsReservation=ItemsReservation.builder().sourceLocation(shipNodesItems.get().getShipNodesLocation())
+                    .destinationLocation(itemsReservationDTO.getLocation()).sourceId(shipNodesItems.get().getShipNodesId())
                     .productId(itemsReservationDTO.getProductId()).build();
 
-            int qty = warehouseItemsByLocation.get().getQuantityAvailable() - 1;
-            iWarehouseItems.delete(warehouseItemsByLocation.get());
+            int qty = shipNodesItems.get().getQuantityAvailable() - 1;
+            iShipNodesItems.deleteItemsFromShipNodes(shipNodesItems.get().getQuantityAvailable(),shipNodesItems.get().getProductId(),shipNodesItems.get().getShipNodesId());
             if(qty > 0){
-                warehouseItemsByLocation.get().setQuantityAvailable(qty);
-                iWarehouseItems.save(warehouseItemsByLocation.get());
+                shipNodesItems.get().setQuantityAvailable(qty);
+                iShipNodesItems.save(shipNodesItems.get());
             }
             iItemReservation.save(itemsReservation);
-            return "Product Reserved in Warehouse Location: " + warehouseItemsByLocation.get().getWarehouseLocation();
+            return "Product Reserved in ShipNode Location: " + shipNodesItems.get().getShipNodesLocation();
         }
 
 
-        Optional<WarehouseItems> warehouseItems=iWarehouseItems.getWareHouseByProductId(itemsReservationDTO.getProductId());
+        Optional<ShipNodesItems> warehouseItems= iShipNodesItems.getWareHouseByProductId(itemsReservationDTO.getProductId());
         if(!warehouseItems.isPresent()){
-            throw new Exception("Warehouse not found");
+            throw new Exception("ShipNode not found");
         }
 
 
-        ItemsReservation itemsReservation=ItemsReservation.builder().sourceLocation(warehouseItems.get().getWarehouseLocation())
-                .destinationLocation(itemsReservationDTO.getLocation()).sourceId(warehouseItems.get().getWarehouseId())
+        ItemsReservation itemsReservation=ItemsReservation.builder().sourceLocation(warehouseItems.get().getShipNodesLocation())
+                .destinationLocation(itemsReservationDTO.getLocation()).sourceId(warehouseItems.get().getShipNodesId())
                 .productId(itemsReservationDTO.getProductId()).build();
 
-        iWarehouseItems.delete(warehouseItems.get());
+        iShipNodesItems.deleteItemsFromShipNodes(warehouseItems.get().getQuantityAvailable(),warehouseItems.get().getProductId(),warehouseItems.get().getShipNodesId());
         int quantity = warehouseItems.get().getQuantityAvailable() - 1;
 
         if(quantity>0){
             warehouseItems.get().setQuantityAvailable(quantity);
-            iWarehouseItems.save(warehouseItems.get());
+            iShipNodesItems.save(warehouseItems.get());
         }
 
         iItemReservation.save(itemsReservation);
-        return "Product Reserved in Warehouse Location: " + warehouseItems.get().getWarehouseLocation();
+        return "Product Reserved in ShipNode Location: " + warehouseItems.get().getShipNodesLocation();
     }
 }

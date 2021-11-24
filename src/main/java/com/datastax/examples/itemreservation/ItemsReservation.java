@@ -15,7 +15,7 @@ import java.util.UUID;
 @Builder
 @Table(value="itemsreservation")
 public class ItemsReservation {
-    @PrimaryKeyColumn(name = "product_id", ordinal = 0,type= PrimaryKeyType.PARTITIONED)
+    @PrimaryKeyColumn(name = "product_id", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
     @CassandraType(type = CassandraType.Name.TEXT)
     private String productId;
 
@@ -27,7 +27,7 @@ public class ItemsReservation {
     @CassandraType(type = CassandraType.Name.TEXT)
     private String sourceLocation;
 
-    @PrimaryKeyColumn(name = "source_id",ordinal = 1, type = PrimaryKeyType.CLUSTERED)
+    @PrimaryKeyColumn(name = "source_id", ordinal = 1, type = PrimaryKeyType.CLUSTERED)
     @CassandraType(type = CassandraType.Name.UUID)
     private UUID sourceId;
 }
